@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',    
     'ecommerceapp.apps.EcommerceappConfig',
+    'authcarts.apps.AuthcartsConfig',
     # 3rd party libraries
     'rest_framework',
     'corsheaders',
