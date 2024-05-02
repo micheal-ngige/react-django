@@ -1,12 +1,16 @@
 import React from 'react'
 import {Navbar,Nav,Container} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+
 
 function Header() {
   return (
     <div>
       <Navbar bg="dark" variant="dark">
         <Container fluid>
-          <Navbar.Brand href="#">Afri Cart</Navbar.Brand>
+          <LinkContainer to="/">
+            <Navbar.Brand>Afri Cart</Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -14,18 +18,26 @@ function Header() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="/">
-                {" "}
-                <i className="fas fa-home"></i> Home
-              </Nav.Link>
-              <Nav.Link href="/">
-                {" "}
-                <i className="fas fa-shopping-cart"></i> CART
-              </Nav.Link>
-              <Nav.Link href="/">
+              <LinkContainer to="/">
+                <Nav.Link>
+                  {" "}
+                  <i className="fas fa-home"></i> Home
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  {" "}
+                  <i className="fas fa-shopping-cart"></i> CART
+                </Nav.Link>
+              </LinkContainer>
+
+                 <LinkContainer to="/login">
+              <Nav.Link>
                 {" "}
                 <i className="fas fa-user"></i> LOGIN
               </Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>

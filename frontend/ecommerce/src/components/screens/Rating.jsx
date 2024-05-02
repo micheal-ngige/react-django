@@ -67,6 +67,7 @@ function Rating({value,color,text}) {
           }
         ></i>
       </span>
+      <span>{text && text}</span>
     </div>
   );
 }
