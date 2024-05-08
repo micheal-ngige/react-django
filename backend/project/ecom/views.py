@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.db import IntegrityError
 
 from ecom.models import Product
+from ecom.products import products
 
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.decorators import api_view,permission_classes
@@ -20,15 +21,21 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getProducts(request):   
-    products=Product.objects.all()
-    serializer=ProductSerializer(products,many=True)
-    return Response(serializer.data)
+    # products=Product.objects.all()
+    # serializer=ProductSerializer(products,many=True)  
+
+        
+    return Response(products)
 
 @api_view(['GET'])
 def getProduct(request,pk):    
-    product=Product.objects.get(_id=pk)
-    serializer=ProductSerializer(product,many=False)
-    return Response(serializer.data)
+    # product=Product.objects.get(_id=pk)
+    # serializer=ProductSerializer(product,many=False)
+    product = None
+    for i in products:
+        if i['_id'] == pk:
+          product = i
+    return Response(product)
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -71,8 +78,8 @@ def registerUser(request):
     print(data)
     try:
         user = User.objects.create(
-            first_name=data['name'],
-            username=data['email'],
+            first_name=data['first_name'],
+            username=data['username'],
             email=data['email'],
             password=make_password(data['password'])
         )
