@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.db import IntegrityError
+
 from ecom.models import Product
 
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -65,18 +67,17 @@ def  getUsers(request):
 
 @api_view(['POST'])
 def registerUser(request):
-    data=request.data
+    data = request.data
     print(data)
     try:
-
-        user=User.objects.create(
+        user = User.objects.create(
             first_name=data['name'],
             username=data['email'],
             email=data['email'],
             password=make_password(data['password'])
         )
-        serializer=UserSerializerWithToken(user,many=False)
+        serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data)
-    except:
-        message={'details':'USER WITH THIS EMAIL ALREADY EXIST'}
-        return Response(message,status=status.HTTP_400_BAD_REQUEST)
+    except IntegrityError:  # Catching IntegrityError 
+        message = {'details': 'USER WITH THIS EMAIL ALREADY EXIST'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)

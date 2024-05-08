@@ -18,7 +18,8 @@ class Product(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
-        return self.name
+      return str(self.name) if self.name else 'Unnamed Product'
+
 
 class Review(models.Model):
     product=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
@@ -61,7 +62,7 @@ class OrderItem(models.Model):
 
         
     def __str__(self):
-        return self.name
+       return str(self.name) if self.name else 'Unnamed OrderItem'
 
 class ShippingAddress(models.Model):
     order=models.OneToOneField(Order,on_delete=models.CASCADE,null=True,blank=True)
@@ -73,4 +74,4 @@ class ShippingAddress(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
-        return self.address
+        return str(self.address) if self.address else 'unnamed address'
