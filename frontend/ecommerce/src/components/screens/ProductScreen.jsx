@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"; // Import useParams
+import { Link, useParams } from "react-router-dom"; 
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import Rating from "./Rating";
 
 function ProductScreen() {
-  const { id } = useParams(); // Use useParams to get the id parameter
-  const [product, setProduct] = useState(null); // Initialize product state with null
+  const { id } = useParams(); 
+  const [product, setProduct] = useState(null); 
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,12 +21,15 @@ function ProductScreen() {
       }
     };
     fetchData();
-  }, [id]); // Include id in the dependency array
+  }, [id]); 
 
-  // Render loading state if product is null
+  
   if (!product) {
     return <div>Loading...</div>;
   }
+  const addToCartHandler = () => {
+    setCart([...cart, { ...product, quantity: 1 }]);
+  };
 
   return (
     <div>
@@ -76,6 +80,7 @@ function ProductScreen() {
                   className="btn-block"
                   disabled={product.countInStock === 0}
                   type="button"
+                  onClick={addToCartHandler}
                 >
                   Add to Cart
                 </Button>
